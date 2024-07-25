@@ -25,4 +25,7 @@ Stupidly naive search for changes in the files of a firmware filesystem.
   2. Take into consideration that any unpacked files inside a rootfs.img should
   have also been unpacked.
 
-# Current version: 1
+# Current version: 1.a
+## Changes:
+  ### 1.a
+  * Added `shell` as a `FILE_EXTENSION` for shell scripts that do not end in `.sh`

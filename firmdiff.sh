@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 # Author: hexpwn (x.com/hexpwn)
-# Version: 1
+# Version: 1.a
 #
 # Stupidly naive search for changes in the files of a firmware filesystem.
 #
@@ -52,6 +52,12 @@ check_diff() {
         find "$src_dir" -type f -exec file {} \; 2>/dev/null | grep "ELF 32-bit LSB executable" |\
             cut -d: -f1 | xargs -I {} md5sum {} 2>/dev/null >> "$tmpfile_src"
         find "$dst_dir" -type f -exec file {} \; 2>/dev/null | grep "ELF 32-bit LSB executable" |\
+            cut -d: -f1 | xargs -I {} md5sum {} 2>/dev/null >> "$tmpfile_dst"
+    elif [ "$ext" = "shell" ]; then
+        # special case for binary files
+        find "$src_dir" -type f -exec file {} \; 2>/dev/null | grep "POSIX shell script" |\
+            cut -d: -f1 | xargs -I {} md5sum {} 2>/dev/null >> "$tmpfile_src"
+        find "$dst_dir" -type f -exec file {} \; 2>/dev/null | grep "POSIX shell script" |\
             cut -d: -f1 | xargs -I {} md5sum {} 2>/dev/null >> "$tmpfile_dst"
     else
         find "$src_dir" -type f -name "*.$1" 2>/dev/null |\
